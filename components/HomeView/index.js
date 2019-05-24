@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { View, Text } from 'react-native'
+import { View, FlatList, Text, TouchableOpacity } from 'react-native'
 import { AppLoading } from 'expo'
 import { FloatingAction } from 'react-native-floating-action'
 // eslint-disable-next-line
@@ -20,23 +20,48 @@ class HomeView extends Component {
     handleInitialData()
   }
 
+  handleOpenDeck = (id) => {
+    const { handleOpenDeck, decks } = this.props
+    const { name } = decks[id]
+    handleOpenDeck({ id, name })
+  }
+
+  renderDeck = ({ item: { id, name, cards } }) => {
+    return (
+      <Fragment>
+        <TouchableOpacity
+          style={styles.deck}
+          onPress={() => this.handleOpenDeck(id)}
+        >
+          <Text style={styles.deckName}>
+            {name}
+          </Text>
+          <Text style={styles.deckCards}>
+            {!cards || cards.length === 0
+              ? 'Empty deck'
+              : cards.length > 1
+                ? `${cards.length} cards`
+                : '1 card'
+            }
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.separator} />
+      </Fragment>
+    )
+  }
+
   render() {
     const { requested, decks, handleAddDeck } = this.props
-    console.log(decks)
+    const data = Object
+      .keys(decks)
+      .map(key => decks[key])
     return requested ? (
       <View style={styles.root}>
-        <Text>
-          Home view
-        </Text>
-        {Object
-          .keys(decks)
-          .map(key => decks[key])
-          .map(deck => {
-            <Text key={deck.id}>
-              {deck.id}
-            </Text>
-          })
-        }
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id}
+          renderItem={this.renderDeck}
+        />
         <FloatingAction
           actions={[{
             text: 'Add deck',
@@ -64,11 +89,13 @@ HomeView.propTypes = {
   requested: PropTypes.bool.isRequired,
   decks: PropTypes.object.isRequired,
   handleInitialData: PropTypes.func.isRequired,
+  handleOpenDeck: PropTypes.func.isRequired,
   handleAddDeck: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ requested, decks }, { navigation }) => {
   return {
+    handleOpenDeck: (payload) => navigation.navigate('DeckView', payload),
     handleAddDeck: () => navigation.navigate('AddDeckView'),
     requested,
     decks

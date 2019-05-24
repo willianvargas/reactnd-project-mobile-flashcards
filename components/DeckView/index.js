@@ -24,12 +24,12 @@ class DeckView extends Component {
           {data.name}
         </Text>
         <Text style={styles.subTitle}>
-          {data.cards.length === 0
+          {!data.cards || data.cards.length === 0
             ? 'This deck is empty'
             : data.cards.length > 1
               ? `${data.cards.length} cards`
               : '1 card'
-          } 
+          }
         </Text>
         <TouchableOpacity
           onPress={this.handleAddCard}
@@ -39,7 +39,7 @@ class DeckView extends Component {
             Add card
           </Text>
         </TouchableOpacity>
-        {data.cards.length > 0 && (
+        {data.cards && data.cards.length > 0 && (
           <TouchableOpacity
             onPress={this.handleStartQuiz}
             style={styles.buttonStart}

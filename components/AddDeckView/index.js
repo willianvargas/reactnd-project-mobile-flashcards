@@ -22,11 +22,11 @@ class AddDeckView extends Component {
 
   handleCreate = () => {
     const { name } = this.state
-    const { handleAddDeck, openDeck } = this.props
+    const { handleAddDeck, handleopenDeck } = this.props
     const id = UUID.v4()
     const payload = { id, name }
     handleAddDeck(payload)
-      .then(openDeck(payload))
+      .then(handleopenDeck(payload))
   }
 
   render() {
@@ -63,13 +63,13 @@ class AddDeckView extends Component {
 
 AddDeckView.propTypes = {
   handleAddDeck: PropTypes.func.isRequired,
-  openDeck: PropTypes.func.isRequired
+  handleopenDeck: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     handleAddDeck: (payload) => dispatch(handleAddDeck(payload)),
-    openDeck: (payload) => {
+    handleopenDeck: (payload) => {
       const navigate = StackActions.replace({
         routeName: 'DeckView',
         params: { ...payload }
