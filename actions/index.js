@@ -1,4 +1,4 @@
-import { fetchInitialData } from '../utils/api'
+import { fetchInitialData, saveDeck } from '../utils/api'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
@@ -6,11 +6,16 @@ export const ADD_DECK_CARD = 'ADD_DECK_CARD'
 
 
 export const handleInitialData = () => {
-  console.log(1)
   return (dispatch) => {
-    console.log(2)
     return fetchInitialData()
       .then(data => dispatch(receiveDecks(data)))
+  }
+}
+
+export const handleAddDeck = (payload) => {
+  return (dispatch) => {
+    dispatch(addDeck(payload))
+    return saveDeck(payload)
   }
 }
 

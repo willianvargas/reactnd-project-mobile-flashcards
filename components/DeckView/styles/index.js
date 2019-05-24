@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-import { blue, white, grey } from '../../../utils/colors'
+import { blue, white, grey, greyDark } from '../../../utils/colors'
 
 
 export default StyleSheet.create({
@@ -13,19 +13,31 @@ export default StyleSheet.create({
   title: {
     fontSize: 36,
     textAlign: 'center',
-    marginBottom: 16
-  },
-  input: {
-    height: 64,
-    fontSize: 26,
-    padding: 8,
-    width: '100%',
-    borderColor: grey,
-    borderWidth: 1,
-    borderRadius: 8,
     marginBottom: 24
   },
-  button: {
+  subTitle: {
+    fontSize: 24,
+    color: greyDark,
+    marginBottom: 24
+  },
+  buttonAdd: {
+    backgroundColor: white,
+    borderColor: grey,
+    borderWidth: 1,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16
+  },
+  buttonAddLabel: {
+    color: blue,
+    fontSize: 18
+  },
+  buttonStart: {
     backgroundColor: blue,
     padding: 10,
     paddingLeft: 30,
@@ -36,10 +48,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16
   },
-  buttonDisabled: {
-    backgroundColor: grey,
-  },
-  buttonLabel: {
+  buttonStartLabel: {
     color: white,
     fontSize: 18
   }

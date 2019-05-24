@@ -22,7 +22,7 @@ class HomeView extends Component {
 
   render() {
     const { requested, decks, handleAddDeck } = this.props
-    console.log(requested, decks)
+    console.log(decks)
     return requested ? (
       <View style={styles.root}>
         <Text>
@@ -32,7 +32,7 @@ class HomeView extends Component {
           .keys(decks)
           .map(key => decks[key])
           .map(deck => {
-            <Text>
+            <Text key={deck.id}>
               {deck.id}
             </Text>
           })

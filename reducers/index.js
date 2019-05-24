@@ -22,6 +22,7 @@ export default (state = INITIAL_STATE, action) => {
         decks: {
           ...state.data,
           [action.payload.id]: {
+            cards: [],
             ...action.payload
           }
         }

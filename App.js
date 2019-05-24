@@ -6,10 +6,11 @@ import { createStackNavigator, createAppContainer } from 'react-navigation'
 
 import reducer from './reducers'
 import middleware from './middleware'
+import { blue } from './utils/colors'
 // import StatusBar from './components/StatusBar'
 import HomeView from './components/HomeView'
 import AddDeckView from './components/AddDeckView'
-import { blue } from './utils/colors'
+import DeckView from './components/DeckView'
 
 
 const store = createStore(reducer, middleware)
@@ -29,6 +30,16 @@ const StackNavigator = createStackNavigator({
       title: 'Add new Deck',
       headerTintColor: blue
     })
+  },
+  DeckView: {
+    screen: DeckView,
+    navigationOptions: ({ navigation }) => {
+      const { state: { params } } = navigation
+      return {
+        title: params.name,
+        headerTintColor: blue
+      }
+    }
   }
 })
 
