@@ -7,11 +7,11 @@ import { createStackNavigator, createAppContainer } from 'react-navigation'
 import reducer from './reducers'
 import middleware from './middleware'
 import { blue } from './utils/colors'
-// import StatusBar from './components/StatusBar'
 import HomeView from './components/HomeView'
 import DeckView from './components/DeckView'
 import AddDeckView from './components/AddDeckView'
 import AddCardView from './components/AddCardView'
+import QuizView from './components/QuizView'
 
 
 const store = createStore(reducer, middleware)
@@ -49,6 +49,13 @@ const StackNavigator = createStackNavigator({
       headerTintColor: blue
     })
   },
+  QuizView: {
+    screen: QuizView,
+    navigationOptions: () => ({
+      title: 'Quiz',
+      headerTintColor: blue
+    })
+  }
 })
 
 const MainNavigator = createAppContainer(StackNavigator)

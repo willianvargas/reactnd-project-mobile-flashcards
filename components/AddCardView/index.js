@@ -12,8 +12,8 @@ import styles from './styles'
 class AddCardView extends Component {
 
   state = {
-    question: 'adpoaksp?',
-    answer: 'aslkd laçsk'
+    question: '',
+    answer: ''
   }
 
   onChange = (field, name) => {
