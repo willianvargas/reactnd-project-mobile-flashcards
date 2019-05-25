@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { StackActions } from 'react-navigation'
 import { shuffle } from 'lodash'
 
-import { handleUpdateLastQuizDate } from '../../actions'
+import { clearLocalNotification, setLocalNotification } from '../../utils/notification'
 import styles from './styles'
 
 
@@ -32,11 +32,18 @@ class QuizView extends Component {
   }
 
   handleAnswerQuestion = (status) => {
-    this.setState(({ current, answers }) => ({
-      current: current + 1,
+    const { cards } = this.props
+    const { current, answers } = this.state
+    const newCurrent = current + 1
+    if (newCurrent === cards.length) {
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
+    this.setState({
       showAnswer: false,
+      current: newCurrent,
       answers: this.getNewStateAnswerQuestion(answers, status)
-    }))
+    })
   }
   
   getNewStateAnswerQuestion = (answers, status) => {
@@ -173,8 +180,7 @@ class QuizView extends Component {
 
 QuizView.propTypes = {
   cards: PropTypes.array.isRequired,
-  handleReturnToDeck: PropTypes.func.isRequired,
-  handleUpdateLastQuizDate: PropTypes.func.isRequired,
+  handleReturnToDeck: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ decks }, { navigation }) => {
@@ -189,10 +195,4 @@ const mapStateToProps = ({ decks }, { navigation }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleUpdateLastQuizDate: () => dispatch(handleUpdateLastQuizDate())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuizView)
+export default connect(mapStateToProps, null)(QuizView)

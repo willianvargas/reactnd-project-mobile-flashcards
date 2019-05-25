@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { StyleSheet, View } from 'react-native'
@@ -12,6 +12,7 @@ import DeckView from './components/DeckView'
 import AddDeckView from './components/AddDeckView'
 import AddCardView from './components/AddCardView'
 import QuizView from './components/QuizView'
+import { setLocalNotification } from './utils/notification'
 
 
 const store = createStore(reducer, middleware)
@@ -60,13 +61,23 @@ const StackNavigator = createStackNavigator({
 
 const MainNavigator = createAppContainer(StackNavigator)
 
-const App = () => (
-  <Provider store={store}>
-    <View style={styles.container}>
-      <MainNavigator />
-    </View>
-  </Provider>
-)
+class App extends Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+  
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={styles.container}>
+          <MainNavigator />
+        </View>
+      </Provider>
+    )
+  }
+
+}
 
 const styles = StyleSheet.create({
   container: {
