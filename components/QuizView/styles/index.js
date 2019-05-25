@@ -6,14 +6,27 @@ import { white, blue, green, grey, redDark } from '../../../utils/colors'
 export default StyleSheet.create({
   root: {
     flex: 1,
+    padding: 16
+  },
+  pageStatus: {
+    fontSize: 16
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 32
+    padding: 16
   },
   title: {
     fontSize: 36,
     textAlign: 'center',
     marginBottom: 32
+  },
+  resultRoot: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32
   },
   resultTitle: {
     fontSize: 32,

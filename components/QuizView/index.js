@@ -77,7 +77,7 @@ class QuizView extends Component {
       const { correct } = answers
       const result = Math.trunc(correct / length * 100)
       return (
-        <View style={styles.root}>
+        <View style={styles.resultRoot}>
           <Text style={styles.resultTitle}>
             Results
           </Text>
@@ -105,7 +105,7 @@ class QuizView extends Component {
             style={styles.buttonBlueOutline}
           >
             <Text style={styles.buttonBlueOutlineLabel}>
-              Back to Deck
+              Back to deck
             </Text>
           </TouchableOpacity>
         </View>
@@ -114,52 +114,57 @@ class QuizView extends Component {
     const card = shuffledCards[current]
     return card ? (
       <View style={styles.root}>
-        {showAnswer ? (
-          <Text style={styles.title}>
-            {card.answer}
-          </Text>
-        ) : (
-          <Text style={styles.title}>
-            {card.question}
-          </Text>
-        )}
-        {showAnswer ? (
-          <Fragment>
+        <Text style={styles.pageStatus}>
+          {`${current + 1}/${length}`}
+        </Text>
+        <View style={styles.content}>
+          {showAnswer ? (
+            <Text style={styles.title}>
+              {card.answer}
+            </Text>
+          ) : (
+            <Text style={styles.title}>
+              {card.question}
+            </Text>
+          )}
+          {showAnswer ? (
+            <Fragment>
+              <TouchableOpacity
+                onPress={this.toggleShowAnswer}
+                style={styles.buttonQuestion}
+              >
+                <Text>
+                  Question
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.handleAnswerQuestion(true)}
+                style={styles.buttonCorrect}
+              >
+                <Text style={styles.buttonLabel}>
+                  Correct
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.handleAnswerQuestion(false)}
+                style={styles.buttonIncorrect}
+              >
+                <Text style={styles.buttonLabel}>
+                  Incorrect
+                </Text>
+              </TouchableOpacity>
+            </Fragment>
+          ) : (
             <TouchableOpacity
               onPress={this.toggleShowAnswer}
-              style={styles.buttonQuestion}
+              style={styles.buttonBlue}
             >
-              <Text>
-                Question
+              <Text style={styles.buttonBlueLabel}>
+                See answer
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.handleAnswerQuestion(true)}
-              style={styles.buttonCorrect}
-            >
-              <Text style={styles.buttonLabel}>
-                Correct
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.handleAnswerQuestion(false)}
-              style={styles.buttonIncorrect}
-            >
-              <Text style={styles.buttonLabel}>
-              Incorrect
-              </Text>
-            </TouchableOpacity>
-          </Fragment>
-        ) : (
-          <TouchableOpacity
-            onPress={this.toggleShowAnswer}
-            style={styles.buttonBlue}
-          >
-            <Text style={styles.buttonBlueLabel}>
-              See answer
-            </Text>
-          </TouchableOpacity>
-        )}
+          )}
+        </View>
       </View>
     ) : null
   }
