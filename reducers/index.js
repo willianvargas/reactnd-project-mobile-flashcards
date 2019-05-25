@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         decks: {
-          ...state.data,
+          ...state.decks,
           [action.payload.id]: {
             cards: [],
             ...action.payload
@@ -32,11 +32,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         decks: {
-          ...state.data,
+          ...state.decks,
           [id]: {
-            ...state[id],
+            ...state.decks[id],
             cards: [
-              ...state[id].cards, {
+              ...(state.decks[id].cards || []), {
                 ...card
               }
             ]

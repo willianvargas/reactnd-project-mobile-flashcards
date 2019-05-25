@@ -19,6 +19,22 @@ export const handleAddDeck = (payload) => {
   }
 }
 
+export const handleAddDeckCard = (id, payload) => {
+  return (dispatch, getState) => {
+    const { decks } = getState()
+    const deck = decks[id]
+    dispatch(addDeckCard(id, payload))
+    return saveDeck({
+      ...deck,
+      cards: [
+        ...(deck.cards || []), {
+          ...payload
+        }
+      ]
+    })
+  }
+}
+
 export const receiveDecks = (payload) => {
   return {
     type: RECEIVE_DECKS,

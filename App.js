@@ -9,8 +9,9 @@ import middleware from './middleware'
 import { blue } from './utils/colors'
 // import StatusBar from './components/StatusBar'
 import HomeView from './components/HomeView'
-import AddDeckView from './components/AddDeckView'
 import DeckView from './components/DeckView'
+import AddDeckView from './components/AddDeckView'
+import AddCardView from './components/AddCardView'
 
 
 const store = createStore(reducer, middleware)
@@ -24,13 +25,6 @@ const StackNavigator = createStackNavigator({
       headerTintColor: blue
     })
   },
-  AddDeckView: {
-    screen: AddDeckView,
-    navigationOptions: () => ({
-      title: 'Add new Deck',
-      headerTintColor: blue
-    })
-  },
   DeckView: {
     screen: DeckView,
     navigationOptions: ({ navigation }) => {
@@ -40,7 +34,21 @@ const StackNavigator = createStackNavigator({
         headerTintColor: blue
       }
     }
-  }
+  },
+  AddDeckView: {
+    screen: AddDeckView,
+    navigationOptions: () => ({
+      title: 'Add new deck',
+      headerTintColor: blue
+    })
+  },
+  AddCardView: {
+    screen: AddCardView,
+    navigationOptions: () => ({
+      title: 'Add new card',
+      headerTintColor: blue
+    })
+  },
 })
 
 const MainNavigator = createAppContainer(StackNavigator)

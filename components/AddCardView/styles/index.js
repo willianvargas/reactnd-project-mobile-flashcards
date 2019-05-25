@@ -10,20 +10,20 @@ export default StyleSheet.create({
     alignItems: 'center',
     padding: 32
   },
-  title: {
-    fontSize: 36,
+  label: {
+    fontSize: 28,
     textAlign: 'center',
-    marginBottom: 16
+    marginBottom: 12
   },
   input: {
-    height: 64,
-    fontSize: 26,
+    height: 48,
+    fontSize: 22,
     padding: 8,
     width: '100%',
     borderColor: grey,
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 24
+    marginBottom: 16
   },
   button: {
     backgroundColor: blue,

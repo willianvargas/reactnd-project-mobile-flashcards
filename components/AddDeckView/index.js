@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from 'react-native'
-import { StackActions, NavigationActions } from 'react-navigation'
+import { StackActions } from 'react-navigation'
 import UUID from 'uuid'
 
-import { grey } from '../../utils/colors'
 import { handleAddDeck } from '../../actions'
 import styles from './styles'
 
@@ -22,16 +21,14 @@ class AddDeckView extends Component {
 
   handleCreate = () => {
     const { name } = this.state
-    const { handleAddDeck, handleopenDeck } = this.props
+    const { handleAddDeck } = this.props
     const id = UUID.v4()
-    const payload = { id, name }
-    handleAddDeck(payload)
-      .then(handleopenDeck(payload))
+    handleAddDeck({ id, name: name.trim() })
   }
 
   render() {
     const { name } = this.state
-    const disabled = name.length === 0
+    const disabled = name.trim().length === 0
     return (
       <KeyboardAvoidingView style={styles.root} behavior="padding" enabled>
         <Text style={styles.title}>
@@ -43,7 +40,7 @@ class AddDeckView extends Component {
           value={name}
         />
         <TouchableOpacity
-          activeOpacity={0.1}//!disabled ? 1 : 0.3}
+          activeOpacity={0.1}
           disabled={disabled}
           onPress={disabled ? undefined : this.handleCreate}
           style={[
@@ -62,19 +59,20 @@ class AddDeckView extends Component {
 }
 
 AddDeckView.propTypes = {
-  handleAddDeck: PropTypes.func.isRequired,
-  handleopenDeck: PropTypes.func.isRequired
+  handleAddDeck: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
-    handleAddDeck: (payload) => dispatch(handleAddDeck(payload)),
-    handleopenDeck: (payload) => {
-      const navigate = StackActions.replace({
-        routeName: 'DeckView',
-        params: { ...payload }
-      })
-      navigation.dispatch(navigate)
+    handleAddDeck: (payload) => {
+      dispatch(handleAddDeck(payload))
+        .then(() => {
+          const navigate = StackActions.replace({
+            routeName: 'DeckView',
+            params: { ...payload }
+          })
+          navigation.dispatch(navigate)
+        })
     }
   }
 }

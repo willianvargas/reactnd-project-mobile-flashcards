@@ -8,16 +8,12 @@ import styles from './styles'
 
 class DeckView extends Component {
 
-  handleAddCard = () => {
-    console.log('handleAddCard')
-  }
-
   handleStartQuiz = () => {
     console.log('handleStartQuiz')
   }
 
   render() {
-    const { data } = this.props
+    const { data, handleAddCard } = this.props
     return (
       <View style={styles.root}>
         <Text style={styles.title}>
@@ -32,7 +28,7 @@ class DeckView extends Component {
           }
         </Text>
         <TouchableOpacity
-          onPress={this.handleAddCard}
+          onPress={handleAddCard}
           style={styles.buttonAdd}
         >
           <Text style={styles.buttonAddLabel}>
@@ -57,13 +53,15 @@ class DeckView extends Component {
 }
 
 DeckView.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  handleAddCard: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ decks }, { navigation }) => {
   const { id } = navigation.state.params
   return {
-    data: decks[id]
+    data: decks[id],
+    handleAddCard: () => navigation.navigate('AddCardView', { id }),
   }
 }
 
